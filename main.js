@@ -139,7 +139,14 @@ const dispalyNews =  (data) => {
     })
 }
 
+// load details to show on Modal
+const loadDetails = async(id) => {
+    const url = await `https://openapi.programming-hero.com/api/news/${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
 
+    console.log(data);
+}
 
 loadAllNews();
 dispalyCategory();
