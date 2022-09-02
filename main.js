@@ -21,9 +21,12 @@ const dispalyCategory = async () => {
 };
 
 
+// loader element
+const loader = document.getElementById("loader");
 
 // load matched news
 const loadMatchedNews = async(id) => {
+    loader.classList.remove("d-none");
     const url = await `https://openapi.programming-hero.com/api/news/category/${id}`;
     const res = await fetch(url);
     const data =await res.json();
@@ -32,12 +35,13 @@ const loadMatchedNews = async(id) => {
 
 // Display the Matched news with the category
 const displayMatchedNews = (allMatchedNews) => {
-    
-    console.log(allMatchedNews.length);
     const newsContainer = document.getElementById("news-container");
     newsContainer.textContent = "";
     if (allMatchedNews.length === 0) {
+        loader.classList.add("d-none");
         newsContainer.innerHTML = `<h3 class="text-center m-auto">No Data found</h3>`
+    }else{
+        loader.classList.add("d-none");
     }
     allMatchedNews.forEach(news => {
         const newsDiv = document.createElement("div");
@@ -93,7 +97,6 @@ const loadAllNews = async () => {
 
 // Display all the news to the UI
 const dispalyNews =  (data) => {
-    // console.log(data);
     // get the news container;
     const newsContainer = document.getElementById("news-container");
     data.forEach(news => {
