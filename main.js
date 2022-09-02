@@ -107,7 +107,7 @@ const dispalyNews =  (data) => {
                         <h5 class="card-title"> ${news.title} </h5>
                         <p class="card-text"> ${news.details.slice(0, 200)}...</p>
                     <div class="m-auto text-center">
-                        <button onclick="loadDetails('${news._id}')" class="btn btn-primary">Details</button>
+                        <button onclick="loadDetails('${news._id}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsDetails">Details</button>
                     </div>
                     <div class="d-flex gap-2 mt-3">
                         <div>
@@ -145,7 +145,7 @@ const loadDetails = async(id) => {
     const res = await fetch(url);
     const data = await res.json();
 
-    console.log(data);
+    console.log(data.data[0]);
 }
 
 loadAllNews();
