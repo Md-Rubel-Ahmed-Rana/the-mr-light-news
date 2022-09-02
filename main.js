@@ -13,12 +13,21 @@ const dispalyCategory = async () => {
     // get the Category container
     const categoryContainerUl = document.getElementById("category-container");
     allCategories.forEach(category => {
+        console.log(category);
         const categoryItem = document.createElement("li");
-        categoryItem.innerHTML = `<a href="#" class="text-decoration-none">${category.category_name}</a>`;
+        categoryItem.classList.add("text-center");
+        categoryItem.innerHTML = `<a onclick="loadMatchedNews('${category.category_id}')" href="#" class="text-decoration-none">${category.category_name}</a>`;
         categoryContainerUl.appendChild(categoryItem)
     });
 };
 
+// load matched news
+const loadMatchedNews = async(id) => {
+    const url = await `https://openapi.programming-hero.com/api/news/category/${id}`;
+    const res = await fetch(url);
+    const data =await res.json();
+
+}
 
 // loading all the news data
 const loadAllNews = async () => {
@@ -36,12 +45,12 @@ const dispalyNews = async () => {
     const allNews = await loadAllNews();
     // console.log(allNews);
     allNews.forEach(news => {
-        console.log(news);
+        // console.log(news);
         // create element to show news to the UI
         const newsDiv = document.createElement("div");
         newsDiv.classList.add("col");
         newsDiv.innerHTML = `
-            <div class="card h-100">
+            <div class="card h-100 p-4">
                 <img src="${news.thumbnail_url}" class="card-img-top" alt="..." style="height: 300px;" >
                 <div class="card-body p-2">
                         <h5 class="card-title"> ${news.title} </h5>
