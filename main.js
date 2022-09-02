@@ -144,8 +144,18 @@ const loadDetails = async(id) => {
     const url = await `https://openapi.programming-hero.com/api/news/${id}`;
     const res = await fetch(url);
     const data = await res.json();
+    showDetails(data.data[0]);
+}
 
-    console.log(data.data[0]);
+const showDetails = (data) => {
+    console.log(data);
+    const image = document.getElementById("modal-img");
+    image.src = data.image_url;
+    // image.src = data.author.img;
+    const name = document.getElementById("author-name");
+    name.innerText = data.author.name === null || data.author.name === "system" || data.author.name === "" ? "No Data found" : data.author.name;
+    const date = document.getElementById("publish-date");
+    date.innerText = "Date: " +  data.author.published_date;
 }
 
 loadAllNews();
