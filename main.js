@@ -16,7 +16,7 @@ const dispalyCategory = async () => {
         const categoryItem = document.createElement("li");
         categoryItem.classList.add("text-center");
         categoryItem.innerHTML = `<a onclick="loadMatchedNews('${category.category_id}')" href="#" class="text-decoration-none">${category.category_name}</a>`;
-        categoryContainerUl.appendChild(categoryItem)
+        categoryContainerUl.appendChild(categoryItem);        
     });
 };
 
@@ -30,7 +30,7 @@ const loadMatchedNews = async(id) => {
     const url = await `https://openapi.programming-hero.com/api/news/category/${id}`;
     const res = await fetch(url);
     const data =await res.json();
-    displayMatchedNews(data.data)
+    displayMatchedNews(data.data);
 }
 
 // Display the Matched news with the category
@@ -39,10 +39,19 @@ const displayMatchedNews = (allMatchedNews) => {
     newsContainer.textContent = "";
     if (allMatchedNews.length === 0) {
         loader.classList.add("d-none");
-        newsContainer.innerHTML = `<h3 class="text-center m-auto">No Data found</h3>`
     }else{
         loader.classList.add("d-none");
     }
+
+    // show found item amount
+    const itemAmount = document.getElementById("item-amount");
+    itemAmount.innerText = allMatchedNews.length;
+
+
+    // show the text how many category is found
+    const itemAmountDiv = document.getElementById("found-news-amount");
+    itemAmountDiv.classList.remove("d-none");
+
     allMatchedNews.forEach(news => {
         const newsDiv = document.createElement("div");
         newsDiv.classList.add("col");
