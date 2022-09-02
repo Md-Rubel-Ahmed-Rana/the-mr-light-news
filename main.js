@@ -47,7 +47,6 @@ const displayMatchedNews = (allMatchedNews) => {
     const itemAmount = document.getElementById("item-amount");
     itemAmount.innerText = allMatchedNews.length;
 
-
     // show the text how many category is found
     const itemAmountDiv = document.getElementById("found-news-amount");
     itemAmountDiv.classList.remove("d-none");
@@ -160,9 +159,8 @@ const loadDetails = async(id) => {
 }
 
 const showDetails = (data) => {
-    console.log(data);
     const image = document.getElementById("modal-img");
-    image.src = data.image_url;
+    image.src = data.author.img;
     // image.src = data.author.img;
     const name = document.getElementById("author-name");
     name.innerText = data.author.name === null || data.author.name === "system" || data.author.name === "" ? "No Data found" : data.author.name;
