@@ -1,4 +1,4 @@
-// loading data from API
+// loading category data from API
 const loadCategories = async() => {
     try {
         const url = await `https://openapi.programming-hero.com/api/news/categories`;
@@ -82,7 +82,7 @@ const displayMatchedNews = (allMatchedNews) => {
                         <h5 class="card-title"> ${news.title} </h5>
                         <p class="card-text"> ${news.details.slice(0, 200)}...</p>
                     <div class="m-auto text-center">
-                        <button onclick="loadMatchedArray('${news._id}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#matchedNewsDetails">Details</button>
+                        <button onclick="loadMatchedNewsArray('${news._id}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#matchedNewsDetails">Details</button>
                     </div>
                     <div class="d-flex gap-2 mt-3">
                         <div>
@@ -119,14 +119,18 @@ const displayMatchedNews = (allMatchedNews) => {
 
 // load an array of matched news
 const loadMatchedNewsArray = async (id) => {
-    const url = await `https://openapi.programming-hero.com/api/news/${id}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    displayMatchedDetails(data.data[0]);
+    try {
+        const url = await `https://openapi.programming-hero.com/api/news/${id}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        displayMatchedNewsDetails(data.data[0]);
+    } catch (error) {
+        alert(error);
+    }
 }
 
 // display deatails of the matched news
-const displayMatchedDetails = (matchedNews) => {
+const displayMatchedNewsDetails = (matchedNews) => {
     try {
         const image = document.getElementById("image")
         image.src = matchedNews.author.img;
@@ -160,6 +164,13 @@ const loadAllNews = async () => {
 // Display all the news to the UI
 const dispalyNews =  (data) => {
     try {
+        // show sorted message
+        const sortMessage = document.getElementById("sort-meassage");
+        sortMessage.value = "Most Views"
+        // sorting
+        data.sort((a, b) => {
+            return b.total_view - a.total_view
+        });
         // get the news container;
         const newsContainer = document.getElementById("news-container");
         data.forEach(news => {
