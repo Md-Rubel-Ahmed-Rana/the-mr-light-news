@@ -76,7 +76,7 @@
 
         <!-- modal section start here -->
         <section>
-            <!-- Modal -->
+            <!-- Modal for default shown news-->
             <div class="modal fade" id="newsDetails" tabindex="-1" aria-labelledby="newsTitle" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -87,6 +87,25 @@
                             <p class="d-flex gap-4 justify-content-center">
                                 <b><span id="total-view"></span></b>
                                 <b><span id="rating"></span></b>
+                            </p>
+                            <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <!-- Modal for matched shown news -->
+            <div class="modal fade" id="matchedNewsDetails" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <img id="image" src="" alt="" style="height: 300px; width: 400px;">
+                            <h5>  <span id="name"> </span></h5>
+                            <p id="date"></p>
+                            <p class="d-flex gap-4 justify-content-center">
+                                <b><span id="view"></span></b>
+                                <b><span id="rate"></span></b>
                             </p>
                             <button type="button" class="btn btn-primary px-4" data-bs-dismiss="modal">Close</button>
                         </div>

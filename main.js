@@ -45,10 +45,10 @@ const loadMatchedNews = async(id) => {
     }
 }
 
+
 // Display the Matched news with the category
 const displayMatchedNews = (allMatchedNews) => {
    try {
-
        // show sorted message
        const sortMessage = document.getElementById("sort-meassage");
        sortMessage.value = "Most Views"
@@ -82,7 +82,7 @@ const displayMatchedNews = (allMatchedNews) => {
                         <h5 class="card-title"> ${news.title} </h5>
                         <p class="card-text"> ${news.details.slice(0, 200)}...</p>
                     <div class="m-auto text-center">
-                        <button class="btn btn-primary">Details</button>
+                        <button onclick="loadMatchedArray('${news._id}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#matchedNewsDetails">Details</button>
                     </div>
                     <div class="d-flex gap-2 mt-3">
                         <div>
@@ -115,6 +115,32 @@ const displayMatchedNews = (allMatchedNews) => {
    } catch (error) {
     alert(error);
    }
+}
+
+// load an array of matched news
+const loadMatchedNewsArray = async (id) => {
+    const url = await `https://openapi.programming-hero.com/api/news/${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    displayMatchedDetails(data.data[0]);
+}
+
+// display deatails of the matched news
+const displayMatchedDetails = (matchedNews) => {
+    try {
+        const image = document.getElementById("image")
+        image.src = matchedNews.author.img;
+        const name = document.getElementById("name");
+        name.innerText = matchedNews.author.name === null || matchedNews.author.name === "system" || matchedNews.author.name === "" ? "No Data found" : "Author Name: " + matchedNews.author.name;
+        const date = document.getElementById("date");
+        date.innerText = matchedNews.author.published_date === null ? "No Data Found" : "Date: " + matchedNews.author.published_date;
+        const totalView = document.getElementById("view");
+        totalView.innerText = matchedNews.total_view === null ? "No Data Found" : "Views: " + matchedNews.total_view + "M";
+        const rate = document.getElementById("rate");
+        rate.innerText = "Rating " + matchedNews.rating.number;
+    } catch (error) {
+        alert(error)
+    }
 }
 
 // loading all the news data
