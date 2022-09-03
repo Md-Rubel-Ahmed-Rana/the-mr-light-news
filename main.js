@@ -48,6 +48,10 @@ const loadMatchedNews = async(id) => {
 // Display the Matched news with the category
 const displayMatchedNews = (allMatchedNews) => {
    try {
+
+       // show sorted message
+       const sortMessage = document.getElementById("sort-meassage");
+       sortMessage.value = "Most Views"
        // sorting
        allMatchedNews.sort((a, b) => {
            return b.total_view - a.total_view
