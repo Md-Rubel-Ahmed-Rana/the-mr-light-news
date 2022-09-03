@@ -143,7 +143,7 @@ const dispalyNews =  (data) => {
                         <h5 class="card-title"> ${news.title} </h5>
                         <p class="card-text"> ${news.details.slice(0, 150)}...</p>
                     <div class="m-auto text-center">
-                        <button onclick="loadDetails('${news._id}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsDetails">Details</button>
+                        <button onclick="loadDetails('${news._id}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsDetails">Show Details</button>
                     </div>
                     <div class="d-flex gap-2 mt-3">
                         <div>
