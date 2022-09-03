@@ -16,7 +16,7 @@ const dispalyCategory = async () => {
         const categoryItem = document.createElement("li");
         categoryItem.classList.add("text-center");
         categoryItem.innerHTML = `<a onclick="loadMatchedNews('${category.category_id}')" href="#" class="text-decoration-none">${category.category_name}</a>`;
-        categoryContainerUl.appendChild(categoryItem);        
+        categoryContainerUl.appendChild(categoryItem);
     });
 };
 
@@ -75,7 +75,7 @@ const displayMatchedNews = (allMatchedNews) => {
                     <div class="d-flex justify-content-between">
                         <div class="d-flex align-items-center gap-2">
                           <p><i class="fa-solid fa-eye"></i></p>
-                          <p> ${news.total_view}M </p>
+                          <p> ${news.total_view === null ? "No Data Found" : news.total_view}M </p>
                         </div>
                         <div class="m-0">
                            <i class="fa-regular fa-star-half-stroke"></i>
@@ -90,6 +90,8 @@ const displayMatchedNews = (allMatchedNews) => {
             </div>
         `;
         newsContainer.appendChild(newsDiv)
+
+        // console.log(displayMatchedNews());
     })
 }
 
@@ -116,7 +118,7 @@ const dispalyNews =  (data) => {
                 <img src="${news.thumbnail_url}" class="card-img-top" alt="..." style="height: 300px;" >
                 <div class="card-body p-2">
                         <h5 class="card-title"> ${news.title} </h5>
-                        <p class="card-text"> ${news.details.slice(0, 200)}...</p>
+                        <p class="card-text"> ${news.details.slice(0, 150)}...</p>
                     <div class="m-auto text-center">
                         <button onclick="loadDetails('${news._id}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsDetails">Details</button>
                     </div>
@@ -132,7 +134,7 @@ const dispalyNews =  (data) => {
                     <div class="d-flex justify-content-between">
                         <div class="d-flex align-items-center gap-2">
                           <p><i class="fa-solid fa-eye"></i></p>
-                          <p> ${news.total_view}M </p>
+                          <p> ${news.total_view === null ? "No Data Found" : news.total_view} M </p>
                         </div>
                         <div class="m-0">
                            <i class="fa-regular fa-star-half-stroke"></i>
@@ -158,14 +160,19 @@ const loadDetails = async(id) => {
     showDetails(data.data[0]);
 }
 
-const showDetails = (data) => {
+const showDetails = async (data) => {
+    // const detailsData = await loadDetails();
+    console.log(data);
     const image = document.getElementById("modal-img");
     image.src = data.author.img;
-    // image.src = data.author.img;
     const name = document.getElementById("author-name");
-    name.innerText = data.author.name === null || data.author.name === "system" || data.author.name === "" ? "No Data found" : data.author.name;
+    name.innerText = data.author.name === null || data.author.name === "system" || data.author.name === "" ? "No Data found" : "Author Name: " + data.author.name;
     const date = document.getElementById("publish-date");
-    date.innerText = "Date: " +  data.author.published_date;
+    date.innerText = data.author.published_date === null ? "No Data Found" : "Date: " + data.author.published_date;
+    const totalView = document.getElementById("total-view");
+    totalView.innerText = data.total_view === null ? "No Data Found" : "Views: " +  data.total_view + "M";
+    const rate = document.getElementById("rating");
+    rate.innerText = "Rating " +  " 1.5"
 }
 
 loadAllNews();

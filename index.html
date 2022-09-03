@@ -21,8 +21,8 @@
                 </div>
                 <div>
                     <ul class="d-flex gap-5 list-unstyled justify-content-center align-items-center fw-bolder">
-                        <li>News</li>
-                        <li>Blogs</li>
+                        <li><a href="">News</a></li>
+                        <li><a href="">Blogs</a></li>
                         <img class="rounded-circle mt-1" style="height:40px; width: 40px;" src="./favicon.jpg" alt="">
                     </ul>
                 </div>
@@ -61,7 +61,7 @@
         </section>
         <!-- news section end here -->
 
-        <!-- modal section end here -->
+        <!-- modal section start here -->
         <section>
             <!-- Modal -->
             <div class="modal fade" id="newsDetails" tabindex="-1" aria-labelledby="newsTitle" aria-hidden="true">
@@ -69,8 +69,12 @@
                     <div class="modal-content">
                         <div class="modal-body text-center">
                             <img id="modal-img" src="" alt="" style="height: 300px; width: 400px;">
-                            <h5>Author Name:  <span id="author-name"> </span></h5>
+                            <h5>  <span id="author-name"> </span></h5>
                             <p id="publish-date"></p>
+                            <p class="d-flex gap-4 justify-content-center">
+                                <b><span id="total-view"></span></b>
+                                <b><span id="rating"></span></b>
+                            </p>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
