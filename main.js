@@ -35,6 +35,11 @@ const loadMatchedNews = async(id) => {
 
 // Display the Matched news with the category
 const displayMatchedNews = (allMatchedNews) => {
+    // sorting
+   allMatchedNews.sort((a, b) => {
+        return b.total_view - a.total_view
+    });
+
     const newsContainer = document.getElementById("news-container");
     newsContainer.textContent = "";
     if (allMatchedNews.length === 0) {
@@ -50,7 +55,6 @@ const displayMatchedNews = (allMatchedNews) => {
     // show the text how many category is found
     const itemAmountDiv = document.getElementById("found-news-amount");
     itemAmountDiv.classList.remove("d-none");
-
     allMatchedNews.forEach(news => {
         const newsDiv = document.createElement("div");
         newsDiv.classList.add("col");
@@ -161,8 +165,6 @@ const loadDetails = async(id) => {
 }
 
 const showDetails = async (data) => {
-    // const detailsData = await loadDetails();
-    console.log(data);
     const image = document.getElementById("modal-img");
     image.src = data.author.img;
     const name = document.getElementById("author-name");
@@ -172,7 +174,7 @@ const showDetails = async (data) => {
     const totalView = document.getElementById("total-view");
     totalView.innerText = data.total_view === null ? "No Data Found" : "Views: " +  data.total_view + "M";
     const rate = document.getElementById("rating");
-    rate.innerText = "Rating " +  " 1.5"
+    rate.innerText = "Rating " + data.rating.number;
 }
 
 loadAllNews();
