@@ -1,23 +1,31 @@
 // loading data from API
 const loadCategories = async() => {
-    const url = await `https://openapi.programming-hero.com/api/news/categories`;
-    const res = await fetch(url);
-    const data = await res.json();
-    return data.data.news_category;
+    try {
+        const url = await `https://openapi.programming-hero.com/api/news/categories`;
+        const res = await fetch(url);
+        const data = await res.json();
+        return data.data.news_category;
+    } catch (error) {
+        alert(error);
+    }
 }
 
 // Display all the category to the UI
 const dispalyCategory = async () => {
-    // get all the categories
-    const allCategories = await loadCategories();
-    // get the Category container
-    const categoryContainerUl = document.getElementById("category-container");
-    allCategories.forEach(category => {
-        const categoryItem = document.createElement("li");
-        categoryItem.classList.add("text-center");
-        categoryItem.innerHTML = `<a onclick="loadMatchedNews('${category.category_id}')" href="#" class="text-decoration-none">${category.category_name}</a>`;
-        categoryContainerUl.appendChild(categoryItem);
-    });
+    try {
+        // get all the categories
+        const allCategories = await loadCategories();
+        // get the Category container
+        const categoryContainerUl = document.getElementById("category-container");
+        allCategories.forEach(category => {
+            const categoryItem = document.createElement("li");
+            categoryItem.classList.add("text-center");
+            categoryItem.innerHTML = `<a onclick="loadMatchedNews('${category.category_id}')" href="#" class="text-decoration-none">${category.category_name}</a>`;
+            categoryContainerUl.appendChild(categoryItem);
+        });
+    } catch (error) {
+        alert(error)
+    }
 };
 
 
@@ -26,39 +34,44 @@ const loader = document.getElementById("loader");
 
 // load matched news
 const loadMatchedNews = async(id) => {
-    loader.classList.remove("d-none");
-    const url = await `https://openapi.programming-hero.com/api/news/category/${id}`;
-    const res = await fetch(url);
-    const data =await res.json();
-    displayMatchedNews(data.data);
+    try {
+        loader.classList.remove("d-none");
+        const url = await `https://openapi.programming-hero.com/api/news/category/${id}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        displayMatchedNews(data.data);
+    } catch (error) {
+        alert(error)
+    }
 }
 
 // Display the Matched news with the category
 const displayMatchedNews = (allMatchedNews) => {
-    // sorting
-   allMatchedNews.sort((a, b) => {
-        return b.total_view - a.total_view
-    });
+   try {
+       // sorting
+       allMatchedNews.sort((a, b) => {
+           return b.total_view - a.total_view
+       });
 
-    const newsContainer = document.getElementById("news-container");
-    newsContainer.textContent = "";
-    if (allMatchedNews.length === 0) {
-        loader.classList.add("d-none");
-    }else{
-        loader.classList.add("d-none");
-    }
+       const newsContainer = document.getElementById("news-container");
+       newsContainer.textContent = "";
+       if (allMatchedNews.length === 0) {
+           loader.classList.add("d-none");
+       } else {
+           loader.classList.add("d-none");
+       }
 
-    // show found item amount
-    const itemAmount = document.getElementById("item-amount");
-    itemAmount.innerText = allMatchedNews.length;
+       // show found item amount
+       const itemAmount = document.getElementById("item-amount");
+       itemAmount.innerText = allMatchedNews.length;
 
-    // show the text how many category is found
-    const itemAmountDiv = document.getElementById("found-news-amount");
-    itemAmountDiv.classList.remove("d-none");
-    allMatchedNews.forEach(news => {
-        const newsDiv = document.createElement("div");
-        newsDiv.classList.add("col");
-        newsDiv.innerHTML = `
+       // show the text how many category is found
+       const itemAmountDiv = document.getElementById("found-news-amount");
+       itemAmountDiv.classList.remove("d-none");
+       allMatchedNews.forEach(news => {
+           const newsDiv = document.createElement("div");
+           newsDiv.classList.add("col");
+           newsDiv.innerHTML = `
             <div class="card h-100 p-4">
                 <img src="${news.thumbnail_url}" class="card-img-top" alt="..." style="height: 300px;" >
                 <div class="card-body p-2">
@@ -93,31 +106,37 @@ const displayMatchedNews = (allMatchedNews) => {
                 </div>
             </div>
         `;
-        newsContainer.appendChild(newsDiv)
-
-        // console.log(displayMatchedNews());
-    })
+           newsContainer.appendChild(newsDiv)
+       })
+   } catch (error) {
+    alert(error);
+   }
 }
 
 // loading all the news data
 const loadAllNews = async () => {
-    const url = await `https://openapi.programming-hero.com/api/news/category/08`;
-    const res = await fetch(url);
-    const data = await res.json();
-    dispalyNews(data.data);
+    try {
+        const url = await `https://openapi.programming-hero.com/api/news/category/08`;
+        const res = await fetch(url);
+        const data = await res.json();
+        dispalyNews(data.data);
+    } catch (error) {
+        alert(error)
+    }
 }
 
 
 
 // Display all the news to the UI
 const dispalyNews =  (data) => {
-    // get the news container;
-    const newsContainer = document.getElementById("news-container");
-    data.forEach(news => {
-        // create element to show news to the UI
-        const newsDiv = document.createElement("div");
-        newsDiv.classList.add("col");
-        newsDiv.innerHTML = `
+    try {
+        // get the news container;
+        const newsContainer = document.getElementById("news-container");
+        data.forEach(news => {
+            // create element to show news to the UI
+            const newsDiv = document.createElement("div");
+            newsDiv.classList.add("col");
+            newsDiv.innerHTML = `
             <div class="card h-100 p-4">
                 <img src="${news.thumbnail_url}" class="card-img-top" alt="..." style="height: 300px;" >
                 <div class="card-body p-2">
@@ -131,7 +150,7 @@ const dispalyNews =  (data) => {
                             <img src="${news.author.img}" class="rounded-circle" style="height: 50px; width: 50px" />
                         </div>
                         <div>
-                            <p class="m-0"> ${ news.author.name === null || news.author.name === "system" ? "Author Name not available" : news.author.name} </p>
+                            <p class="m-0"> ${news.author.name === null || news.author.name === "system" ? "Author Name not available" : news.author.name} </p>
                             <p> ${news.author.published_date === null ? "No Date available" : news.author.published_date} </p>
                         </div>
                     </div>
@@ -152,29 +171,40 @@ const dispalyNews =  (data) => {
                 </div>
             </div>
         `;
-        newsContainer.appendChild(newsDiv)
-    })
+            newsContainer.appendChild(newsDiv)
+        })
+    } catch (error) {
+        alert(error)
+    }
 }
 
 // load details to show on Modal
 const loadDetails = async(id) => {
-    const url = await `https://openapi.programming-hero.com/api/news/${id}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    showDetails(data.data[0]);
+    try {
+        const url = await `https://openapi.programming-hero.com/api/news/${id}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        showDetails(data.data[0]);
+    } catch (error) {
+        alert(error);
+    }
 }
 
 const showDetails = async (data) => {
-    const image = document.getElementById("modal-img");
-    image.src = data.author.img;
-    const name = document.getElementById("author-name");
-    name.innerText = data.author.name === null || data.author.name === "system" || data.author.name === "" ? "No Data found" : "Author Name: " + data.author.name;
-    const date = document.getElementById("publish-date");
-    date.innerText = data.author.published_date === null ? "No Data Found" : "Date: " + data.author.published_date;
-    const totalView = document.getElementById("total-view");
-    totalView.innerText = data.total_view === null ? "No Data Found" : "Views: " +  data.total_view + "M";
-    const rate = document.getElementById("rating");
-    rate.innerText = "Rating " + data.rating.number;
+    try {
+        const image = document.getElementById("modal-img");
+        image.src = data.author.img;
+        const name = document.getElementById("author-name");
+        name.innerText = data.author.name === null || data.author.name === "system" || data.author.name === "" ? "No Data found" : "Author Name: " + data.author.name;
+        const date = document.getElementById("publish-date");
+        date.innerText = data.author.published_date === null ? "No Data Found" : "Date: " + data.author.published_date;
+        const totalView = document.getElementById("total-view");
+        totalView.innerText = data.total_view === null ? "No Data Found" : "Views: " + data.total_view + "M";
+        const rate = document.getElementById("rating");
+        rate.innerText = "Rating " + data.rating.number;
+    } catch (error) {
+        alert(error)
+    }
 }
 
 loadAllNews();
