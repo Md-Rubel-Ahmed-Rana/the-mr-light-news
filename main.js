@@ -231,6 +231,7 @@ const loadDetails = async(id) => {
     }
 }
 
+// show a blog details information
 const showDetails = async (data) => {
     try {
         const image = document.getElementById("modal-img");
